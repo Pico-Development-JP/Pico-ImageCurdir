@@ -25,7 +25,7 @@ class ImageCurDir{
 	{
     $file_url = substr($data["url"], strlen($this->base_url));
     if($file_url[strlen($file_url) - 1] == "/") $file_url .= 'index';
-    if (strlen($page_meta['image']) > 0 && preg_match('/^(.+\/)[\w\.-]+?$/', $file_url, $m)) {
+    if (strlen($page_meta['image']) > 0 && preg_match('/^(.*\/)[\w\.-]+$/', $file_url, $m)) {
       if($page_meta['image'][0] == '.'){
         $data['image'] = $this->base_url . "/" . $this->content_dir . "$m[0]$page_meta[image]";
       }else if(!preg_match('/^(https?|ftp)/', $page_meta['image'])){
