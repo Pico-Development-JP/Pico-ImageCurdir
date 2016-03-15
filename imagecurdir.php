@@ -9,6 +9,8 @@
  */
 class ImageCurDir extends AbstractPicoPlugin{
 
+  protected $enabled = false;
+
   private $base_url;
   
   public function onConfigLoaded(array &$config) {
