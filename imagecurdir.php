@@ -5,7 +5,7 @@
  * @author TakamiChie
  * @link http://onpu-tamago.net/
  * @license http://opensource.org/licenses/MIT
- * @version 1.0
+ * @version 1.1
  */
 class ImageCurDir extends AbstractPicoPlugin{
 
