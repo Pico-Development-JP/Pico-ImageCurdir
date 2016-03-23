@@ -29,9 +29,9 @@ class ImageCurDir extends AbstractPicoPlugin{
     $dir = substr($content_dir, strlen($rootdir));
     if (strlen($img) > 0 && preg_match('/^(.*\/)[\w\.-]+$/', $file_url, $m)) {
       if($img[0] == '.'){
-        $img = $base_url . "$dir/$m[0]$img";
+        $img = $base_url . "$dir$m[0]$img";
       }else if(!preg_match('/^(https?|ftp)/', $img)){
-        $img = $base_url . "$dir/$m[1]$img";
+        $img = $base_url . "$dir$m[1]$img";
       }
     } else {
       $img = NULL;
