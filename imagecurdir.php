@@ -22,7 +22,11 @@ class ImageCurDir extends AbstractPicoPlugin{
     $content_dir = $this->getConfig('content_dir');
     
     $file_url = substr($pageData["url"], strlen($base_url));
-    if($file_url[strlen($file_url) - 1] == "/") $file_url .= 'index';
+    $file_url_len = strlen($file_url);
+    if($file_url_len && $file_url[$file_url_len - 1] == "/")
+    {
+      $file_url .= 'index';
+    }
     $img = $pageData['meta']['image'];
     // rootdirを除去する(1.0対応)
     $rootdir = $this->getPico()->getRootDir();
