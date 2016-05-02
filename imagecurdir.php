@@ -18,29 +18,34 @@ class ImageCurDir extends AbstractPicoPlugin{
 	
 	public function onSinglePageLoaded(array &$pageData)
   {
-    $base_url = $this->getBaseUrl();
-    $content_dir = $this->getConfig('content_dir');
-    
-    $file_url = substr($pageData["url"], strlen($base_url));
-    $file_url_len = strlen($file_url);
-    if($file_url_len && $file_url[$file_url_len - 1] == "/")
-    {
-      $file_url .= 'index';
-    }
-    $img = $pageData['meta']['image'];
-    // rootdirを除去する(1.0対応)
-    $rootdir = $this->getPico()->getRootDir();
-    $dir = substr($content_dir, strlen($rootdir));
-    if (strlen($img) > 0 && preg_match('/^(.*\/)[\w\.-]+$/', $file_url, $m)) {
-      if($img[0] == '.'){
-        $img = $base_url . "$dir$m[0]$img";
-      }else if(!preg_match('/^(https?|ftp)/', $img)){
-        $img = $base_url . "$dir$m[1]$img";
+    if(isset($pageData['meta']['image'])) {
+      $base_url = $this->getBaseUrl();
+      $content_dir = $this->getConfig('content_dir');
+      
+      $file_url = substr($pageData["url"], strlen($base_url));
+      $file_url_len = strlen($file_url);
+      if(!$file_url_len || $file_url[$file_url_len - 1] == "/")
+      {
+        $file_url .= 'index';
       }
-    } else {
-      $img = NULL;
+      $img = $pageData['meta']['image'];
+      // rootdirを除去する(1.0対応)
+      $rootdir = $this->getPico()->getRootDir();
+      $dir = substr($content_dir, strlen($rootdir));
+      if (strlen($img) > 0) {
+        $path = pathinfo($file_url);
+        $path['dirname'] = $path['dirname'] == "." ? "" : 
+          $path['dirname'] . "/";
+        if($img[0] == '.'){
+          $img = $base_url . "$dir${path['dirname']}${path['filename']}$img";
+        }else if(!preg_match('/^(https?|ftp)/', $img)){
+          $img = $base_url . "$dir${path['dirname']}$img";
+        }
+      } else {
+        $img = NULL;
+      }
+      $pageData['image'] = $img;
     }
-    $pageData['image'] = $img;
 	}
 }
 
