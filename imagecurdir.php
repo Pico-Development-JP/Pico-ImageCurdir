@@ -55,11 +55,10 @@ class ImageCurDir extends AbstractPicoPlugin{
 
     // メタデータ「content」のパス変換
     if(isset($pageData['content'])) {
-      var_dump($pageData['content']);
-      $pageData['content'] = preg_replace_callback("|!\[([^]]*)\]\(([^\)]*)\)|", 
+      $pageData['content'] = preg_replace_callback('|<img([^>]*)src="([^"]*)"|', 
       function($m) use ($pathSettlement){
         $imgpath = $pathSettlement($m[2]);
-        return "![$m[1]]($imgpath)";
+        return "<img$m[1]src=\"$imgpath\"";
       }, $pageData['content']);
     }
 	}
